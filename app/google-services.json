@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "655543526430",
+    "firebase_url": "https://c-movies-ae55b.firebaseio.com",
+    "project_id": "c-movies-ae55b",
+    "storage_bucket": "c-movies-ae55b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:655543526430:android:adcdbb949557943b",
+        "android_client_info": {
+          "package_name": "com.rstudio.cmovies"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "655543526430-md5lbs0ii8rrpesobt6qvltqunim0nqe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rstudio.cmovies",
+            "certificate_hash": "630a01d14a34c64c193e78b2b2166318ac39088d"
+          }
+        },
+        {
+          "client_id": "655543526430-9gr3sr8bpn66c7p4uhn2p6aq1qme1k7r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCcS1RupJyvUW4JqzbFZ758yvIfyYsiqk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "655543526430-9gr3sr8bpn66c7p4uhn2p6aq1qme1k7r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

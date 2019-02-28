@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">C Movies</string>
+    <string name="testMovieDesc">K.G.F: Chapter 1 is a 2018 Indian Kannada-language period action film[5][6] written and directed by Prashanth Neel, and produced by Vijay Kiragandur under the banner Hombale films. It is the first installment in the two-part series, followed by K.G.F: Chapter 2. </string>
+    <string name="what_s_new">What\'s New !</string>
+    <string name="hindi">Hindi</string>
+    <string name="malayalam">Malayalam</string>
+</resources>

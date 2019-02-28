@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".WatchMovieActivity">
+
+    <FrameLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
+
+
+        <bg.devlabs.fullscreenvideoview.FullscreenVideoView
+            android:id="@+id/videoView_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+    </FrameLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/relativeLayout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_movieNameWatchActivity"
+                    style="@style/Theme.AppCompat.DayNight.NoActionBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@+id/imgBtn_expandMovieDetailsWatch"
+                    android:fontFamily="sans-serif-condensed"
+                    android:maxLines="3"
+                    android:text="K.G.F Chapter 1"
+                    android:textSize="20sp" />
+
+                <ImageButton
+                    android:id="@+id/imgBtn_expandMovieDetailsWatch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Movie Description"
+                android:textColor="#000"
+                android:textSize="16sp" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginRight="50dp"
+                android:background="#000"
+                android:backgroundTint="#000" />
+
+            <TextView
+                android:id="@+id/tv_movieDescWatchActivity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="@string/testMovieDesc"
+                android:textColor="#000" />
+
+            <HorizontalScrollView
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="150dp">
+
+                <android.support.v7.widget.RecyclerView
+                    android:orientation="horizontal"
+                    android:id="@+id/recyclerView_WatchaActivity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+
+            </HorizontalScrollView>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>
