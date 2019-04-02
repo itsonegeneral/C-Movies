@@ -15,7 +15,8 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".WatchMovieActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation">
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:launchMode="singleTop">
         </activity>
         <activity android:name=".StartActivity">
             <intent-filter>

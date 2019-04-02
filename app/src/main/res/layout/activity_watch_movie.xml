@@ -14,10 +14,10 @@
         android:layout_alignParentTop="true">
 
 
-        <bg.devlabs.fullscreenvideoview.FullscreenVideoView
+        <VideoView
             android:id="@+id/videoView_main"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="300dp" />
 
 
     </FrameLayout>

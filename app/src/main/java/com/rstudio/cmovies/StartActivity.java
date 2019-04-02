@@ -1,13 +1,17 @@
 package com.rstudio.cmovies;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
+
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -15,8 +19,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firestore.v1.TransactionOptions;
+
 import java.util.ArrayList;
 
 public class StartActivity extends AppCompatActivity {
@@ -55,6 +62,21 @@ public class StartActivity extends AppCompatActivity {
         viewHindi.setHasFixedSize(true);
         viewHindi.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         viewHindi.setAdapter(adaptorH);
+        adaptorH.setOnItemClickListner(new HorizontalMovieAdaptor.OnItemClickListner() {
+            @Override
+            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+                try {
+                    Movie movie =  documentSnapshot.toObject(Movie.class);
+                    Toast.makeText(getApplicationContext(), movie.getMovieName(), Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(StartActivity.this,WatchMovieActivity.class);
+                    i.putExtra("url",movie.getVideoLocation());
+                    i.putExtra("movieName",movie.getMovieName());
+                    startActivity(i);
+                }catch (NullPointerException e ){
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     public void setMal() {
@@ -83,6 +105,7 @@ public class StartActivity extends AppCompatActivity {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                 Log.d(TAG, "DataSnaoshot Loading");
                 for (DataSnapshot s : dataSnapshot.getChildren()){
                     Log.d(TAG, "onDataChange: Got Value "+ s.getValue(String.class));
