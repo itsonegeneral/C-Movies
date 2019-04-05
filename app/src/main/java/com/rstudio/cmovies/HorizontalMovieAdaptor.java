@@ -1,77 +1,103 @@
 package com.rstudio.cmovies;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.firestore.DocumentSnapshot;
+import android.widget.Toast;
 
-public class HorizontalMovieAdaptor extends FirestoreRecyclerAdapter<Movie, HorizontalMovieAdaptor.NoteHolder> {
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
+
+import java.util.List;
+
+public class HorizontalMovieAdaptor extends RecyclerView.Adapter<HorizontalMovieAdaptor.MyViewHolder> {
 
     private Context context;
-    public OnItemClickListner listener;
+    private List<Movie> moviesList;
+    private OnItemClickListener mListener;
 
-    public HorizontalMovieAdaptor(@NonNull FirestoreRecyclerOptions<Movie> options) {
-        super(options);
+
+    public interface OnItemClickListener{
+        void onItemClick(int position);
     }
 
-    @Override
-    protected void onBindViewHolder(@NonNull NoteHolder holder, int position, @NonNull Movie model) {
-        Glide.with(context).load(Uri.parse(model.getImageUrl()).toString())
-                .apply(RequestOptions.centerCropTransform())
-                .into(holder.movieImage);
-        //  Toast.makeText(context,model.getMovieName(),Toast.LENGTH_SHORT).show();
-        holder.movieName.setText(model.getMovieName());
-
+    public void setOnItemClickListener(OnItemClickListener listener){
+        mListener = listener;
     }
 
-
-    @NonNull
-    @Override
-    public NoteHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.movie_list_view,
-                parent, false);
-
-        this.context = parent.getContext();
-        return new NoteHolder(v);
-
-    }
-
-    class NoteHolder extends RecyclerView.ViewHolder {
-        ImageView movieImage;
-        TextView movieName;
-        CardView cardView;
-
-        public NoteHolder(final View itemView) {
-            super(itemView);
-
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+        public TextView movieName, year, genre;
+        public ImageView movieIcon;
+        public ProgressBar pgLoading;
+        public MyViewHolder(View view,OnItemClickListener listener) {
+            super(view);
+            movieName = view.findViewById(R.id.tv_movieNameAdaptor);
+            movieIcon = view.findViewById(R.id.img_movieHorizontal);
+            pgLoading = view.findViewById(R.id.pgBar_Adaptor);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    if(position!= RecyclerView.NO_POSITION && listener != null){
-                        listener.onItemClick(getSnapshots().getSnapshot(position),position);
+                    if(listener != null){
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION){
+                            listener.onItemClick(position);
+                        }
                     }
                 }
             });
-            movieName = itemView.findViewById(R.id.tv_movieNameAdaptor);
-            movieImage = itemView.findViewById(R.id.image_movieHorizontal);
         }
     }
-    public interface OnItemClickListner{
-        void onItemClick(DocumentSnapshot documentSnapshot, int position);
+
+
+    public HorizontalMovieAdaptor(List<Movie> moviesList, Context context) {
+        this.context = context;
+        this.moviesList = moviesList;
     }
-    public void setOnItemClickListner(OnItemClickListner listener){
-        this.listener = listener;
+
+    @Override
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.movie_list_view, parent, false);
+
+        return new MyViewHolder(itemView,mListener);
+    }
+
+    @Override
+    public void onBindViewHolder(MyViewHolder holder, int position) {
+        Movie movie = moviesList.get(position);
+        holder.pgLoading.setVisibility(View.VISIBLE);
+        Glide.with(context).load(Uri.parse(movie.getImageLink()).toString())
+                .apply(RequestOptions.centerCropTransform()).listener(new RequestListener<Drawable>() {
+            @Override
+            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                holder.pgLoading.setVisibility(View.GONE);
+                return false;
+            }
+
+            @Override
+            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                holder.pgLoading.setVisibility(View.GONE);
+                return false;
+            }
+        }).into(holder.movieIcon);
+        holder.movieName.setText(movie.getMovieName());
+    }
+
+    @Override
+    public int getItemCount() {
+        return moviesList.size();
     }
 }
+
